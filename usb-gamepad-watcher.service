@@ -1,0 +1,10 @@
+[Unit]
+Description=Keeps JoyStickInput.py Script Running
+
+[Service]
+Type=idle
+ExecStart=/bin/bash -l -c '/usr/local/bin/start-python-script.sh'
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
