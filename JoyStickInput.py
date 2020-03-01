@@ -68,4 +68,4 @@ for event in gamepad.read_loop():
 				print( "Inside Button Press Cooldown" )
 				continue
 			LAST_PRESSED_TIME = now
-			express_publish({ "button_code": keyevent.keycode[ 0 ] , "button_number": KeyCodeType[ keyevent.keycode[ 0 ] ] })
+			express_publish({ "button_code": keyevent.keycode[ 0 ] , "button_number": KeyCodeType[ keyevent.keycode ] })
