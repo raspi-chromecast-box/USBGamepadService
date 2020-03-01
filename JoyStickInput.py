@@ -34,7 +34,7 @@ def express_publish( options ):
 	try:
 		print( "Sedinging POST to Express Server" )
 		print( options )
-		response = requests.post( 'http://localhost:9696/buttons' , data=options )
+		response = requests.post( 'http://localhost:9696/button' , data=options )
 	except Exception as e:
 		print( e )
 
