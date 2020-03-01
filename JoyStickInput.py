@@ -33,7 +33,7 @@ print( our_event_path )
 def express_publish( options ):
 	try:
 		print( "Sedinging POST to Express Server" )
-		pritn( options )
+		print( options )
 		response = requests.post( 'http://localhost:9696/buttons' , data=options )
 	except Exception as e:
 		print( e )
