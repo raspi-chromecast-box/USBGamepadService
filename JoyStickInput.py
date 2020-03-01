@@ -63,10 +63,17 @@ for event in gamepad.read_loop():
 		if keyevent.keystate == KeyEvent.key_up:
 
 			now = int( time.time() )
-			duration = now - LAST_PRESSED_TIME
-			if duration < LAST_PRESSED_COOLDOWN:
+			elapsed_seconds = now - LAST_PRESSED_TIME
+			print( str( now ) + " - " + str( LAST_PRESSED_TIME ) )
+			print( "Elapsed Seconds = " + str( elapsed_seconds ) )
+			print( str( elapsed_seconds ) + " < " + str( LAST_PRESSED_TIME ) )
+			if elapsed_seconds < LAST_PRESSED_COOLDOWN:
 				print( "Inside Button Press Cooldown" )
 				continue
 			else:
 				LAST_PRESSED_TIME = now
-				express_publish({ "button_code": keyevent.keycode[ 0 ] , "button_number": KeyCodeType[ keyevent.keycode ] })
+				express_publish({ "button_code": keyevent.keycode , "button_number": KeyCodeType[ keyevent.keycode ] })
+
+
+
+
