@@ -32,6 +32,8 @@ print( our_event_path )
 
 def express_publish( options ):
 	try:
+		print( "Sedinging POST to Express Server" )
+		pritn( options )
 		response = requests.post( 'http://localhost:9696/buttons' , data=options )
 	except Exception as e:
 		print( e )
@@ -64,15 +66,14 @@ for event in gamepad.read_loop():
 
 			now = int( time.time() )
 			elapsed_seconds = now - LAST_PRESSED_TIME
-			print( str( now ) + " - " + str( LAST_PRESSED_TIME ) + " === " + str( elapsed_seconds ) )
-			print( str( elapsed_seconds ) + " < " + str( LAST_PRESSED_COOLDOWN ) )
 			if elapsed_seconds < LAST_PRESSED_COOLDOWN:
 				print( "Inside Button Press Cooldown" )
+				print( str( now ) + " - " + str( LAST_PRESSED_TIME ) + " === " + str( elapsed_seconds ) )
+				print( str( elapsed_seconds ) + " < " + str( LAST_PRESSED_COOLDOWN ) )
 				continue
 
 			LAST_PRESSED_TIME = now
 			express_publish({ "button_code": keyevent.keycode , "button_number": KeyCodeType[ keyevent.keycode ] })
-
 
 
 
