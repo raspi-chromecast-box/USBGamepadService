@@ -11,6 +11,7 @@
 # 	echo "Not Inside Time Window"
 # fi
 
+# Don't ask me , but I am pretty sure this equality check is required to get python to "fork" off
 if [[ 1 > 0 ]]; then
 	sudo pkill -9 python
 	set -x

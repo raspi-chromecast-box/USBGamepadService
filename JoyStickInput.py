@@ -1,6 +1,8 @@
 import sys
 import time
 import subprocess
+import requests
+import enum
 from evdev import InputDevice, categorize, ecodes, KeyEvent
 
 def find_event_path_of_named_joystick():
@@ -23,10 +25,31 @@ our_event_path = "/dev/input/" + find_event_path_of_named_joystick()
 print( our_event_path )
 
 # ToBe Replaced By Local HTTP Request to "WebServer"
-def launch_py_script_as_os_command( py_script_path ):
-	shell_command = [ "python3" , py_script_path , "--uri" , "spotify:track:4qetR2UUyBeUrJ9DbYrpVQ" ]
-	result = subprocess.run( shell_command , capture_output=False , universal_newlines=True )
-	print( result )
+# def launch_py_script_as_os_command( py_script_path ):
+# 	shell_command = [ "python3" , py_script_path , "--uri" , "spotify:track:4qetR2UUyBeUrJ9DbYrpVQ" ]
+# 	result = subprocess.run( shell_command , capture_output=False , universal_newlines=True )
+# 	print( result )
+
+def express_publish( options ):
+	try:
+		response = requests.post( 'http://localhost:9696/python-script' , data=options )
+	except Exception as e:
+		print( e )
+
+# Maps Button Names to the Way We Installed Physical Buttons into Wooden Box
+class KeyCodeType( enum.Enum ):
+	'BTN_BASE4' = 1
+	'BTN_BASE5' = 2
+	'BTN_BASE6' = 3
+	'BTN_BASE2' = 4
+	'BTN_BASE3' = 5
+	'BTN_JOYSTICK' = 6
+	'BTN_THUMB' = 7
+	'BTN_PINKIE' = 8
+	'BTN_BASE' = 9
+	'BTN_THUMB2' = 10
+	'BTN_TOP' = 11
+	'BTN_TOP2' = 12
 
 gamepad = InputDevice( our_event_path )
 LAST_PRESSED_TIME = int( time.time() )
@@ -43,44 +66,4 @@ for event in gamepad.read_loop():
 				print( "Inside Button Press Cooldown" )
 				continue
 			LAST_PRESSED_TIME = now
-
-			if keyevent.keycode[ 0 ] == 'BTN_JOYSTICK':
-				print( "6" )
-				sys.stdout.flush()
-			elif keyevent.keycode == 'BTN_THUMB':
-				print( "7" )
-				sys.stdout.flush()
-			elif keyevent.keycode == 'BTN_THUMB2':
-				print( "10" )
-				sys.stdout.flush()
-			elif keyevent.keycode == 'BTN_TOP':
-				print( "11" )
-				sys.stdout.flush()
-			elif keyevent.keycode == 'BTN_TOP2':
-				print( "12" )
-				sys.stdout.flush()
-			elif keyevent.keycode == 'BTN_PINKIE':
-				print( "8" )
-				sys.stdout.flush()
-			elif keyevent.keycode == 'BTN_BASE':
-				print( "9" )
-				sys.stdout.flush()
-			elif keyevent.keycode == 'BTN_BASE4':
-				print( "1" )
-				launch_py_script_as_os_command( "/home/morphs/WORKSPACE/PYTHON/RaspiChromeCastBoxPortable/COMMANDS/SPOTIFY/Test.py" )
-				sys.stdout.flush()
-			elif keyevent.keycode == 'BTN_BASE5':
-				print( "2" )
-				sys.stdout.flush()
-			elif keyevent.keycode == 'BTN_BASE6':
-				print( "3" )
-				sys.stdout.flush()
-			elif keyevent.keycode == 'BTN_BASE2':
-				print( "4" )
-				sys.stdout.flush()
-			elif keyevent.keycode == 'BTN_BASE3':
-				print( "5" )
-				sys.stdout.flush()
-			elif keyevent.keycode == 'BTN_BASE4':
-				print( "12" )
-				sys.stdout.flush()
+			express_publish({ "button_code": keyevent.keycode[ 0 ] , "button_number": KeyCodeType[ keyevent.keycode[ 0 ] ] })
