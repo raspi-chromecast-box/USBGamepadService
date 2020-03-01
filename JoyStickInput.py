@@ -32,24 +32,24 @@ print( our_event_path )
 
 def express_publish( options ):
 	try:
-		response = requests.post( 'http://localhost:9696/python-script' , data=options )
+		response = requests.post( 'http://localhost:9696/buttons' , data=options )
 	except Exception as e:
 		print( e )
 
 # Maps Button Names to the Way We Installed Physical Buttons into Wooden Box
 class KeyCodeType( enum.Enum ):
-	'BTN_BASE4' = 1
-	'BTN_BASE5' = 2
-	'BTN_BASE6' = 3
-	'BTN_BASE2' = 4
-	'BTN_BASE3' = 5
-	'BTN_JOYSTICK' = 6
-	'BTN_THUMB' = 7
-	'BTN_PINKIE' = 8
-	'BTN_BASE' = 9
-	'BTN_THUMB2' = 10
-	'BTN_TOP' = 11
-	'BTN_TOP2' = 12
+	BTN_BASE4 = 1
+	BTN_BASE5 = 2
+	BTN_BASE6 = 3
+	BTN_BASE2 = 4
+	BTN_BASE3 = 5
+	BTN_JOYSTICK = 6
+	BTN_THUMB = 7
+	BTN_PINKIE = 8
+	BTN_BASE = 9
+	BTN_THUMB2 = 10
+	BTN_TOP = 11
+	BTN_TOP2 = 12
 
 gamepad = InputDevice( our_event_path )
 LAST_PRESSED_TIME = int( time.time() )
