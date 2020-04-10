@@ -4,6 +4,7 @@ import time
 import subprocess
 import requests
 from evdev import InputDevice, categorize, ecodes, KeyEvent
+
 def express_publish( options ):
 	try:
 		print( "\nSending POST to Express Server" )
@@ -12,6 +13,7 @@ def express_publish( options ):
 		print( response.text )
 	except Exception as e:
 		print( e )
+
 KeyCodeType = {
 	'BTN_BASE4': 1 ,
 	'BTN_BASE5': 2 ,
@@ -27,6 +29,7 @@ KeyCodeType = {
 	'BTN_TOP2' : 2
 }
 TOTAL_INPUT_DEVICES = 31
+
 def try_to_get_gamepad():
 	for i in range( TOTAL_INPUT_DEVICES ):
 		try:
@@ -64,23 +67,19 @@ def run_read_loop():
 					LAST_PRESSED_TIME = now
 					express_publish({ "button_code": keyevent.keycode , "button_number": KeyCodeType[ keyevent.keycode ] })
 	except Exception as e:
-		# print( "Couldn't Read Event Loop" )
-		# print( "Rebooting" )
-		#os.system( "reboot -f" )
 		return False
 
-
 attempt_1 = run_read_loop()
-print( "Couldn't Read Event Loop, Sleeping for 3 Seconds" )
+print( "Couldn't Read Event Loop, Sleeping for 5 Seconds" )
 time.sleep( 5 )
 attempt_2 = run_read_loop()
-print( "Couldn't Read Event Loop, Sleeping for 3 Seconds" )
+print( "Couldn't Read Event Loop, Sleeping for 5 Seconds" )
 time.sleep( 5 )
 attempt_3 = run_read_loop()
-print( "Couldn't Read Event Loop, Sleeping for 3 Seconds" )
+print( "Couldn't Read Event Loop, Sleeping for 5 Seconds" )
 time.sleep( 5 )
 attempt_4 = run_read_loop()
-print( "Couldn't Read Event Loop, Sleeping for 3 Seconds" )
+print( "Couldn't Read Event Loop, Sleeping for 5 Seconds" )
 time.sleep( 5 )
 attempt_5 = run_read_loop()
 print( "Couldn't Read Event Loop 5 Times in a Row" )
