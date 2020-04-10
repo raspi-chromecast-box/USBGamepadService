@@ -1,0 +1,12 @@
+#!/sbin/openrc-run
+
+name="alpine-init-d-python-script"
+command_background="yes"
+command="/usr/bin/python3"
+command_args="/home/JoyStickInputDocker.py"
+command_user="root"
+
+depend() {
+	need net
+	need localmount
+}
